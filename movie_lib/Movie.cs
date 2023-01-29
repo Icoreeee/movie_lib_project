@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace movie_lib
 {
-    internal class Movie
+    internal class Movie : IComparable<Movie>
     {
         public enum QualityType { SD, HD, UHD }
         public string Title { get; private set; }
@@ -16,17 +17,24 @@ namespace movie_lib
         int ID;
         public Movie(int id) { ID = id; }
 
+        public int CompareTo(Movie other)
+        { 
+            if (other == null) 
+                return 1;
+            return Year.CompareTo(other.Year);
+        }
+
         public void InputData()
         {
-            Console.Write("Title - ");
+            Console.Write("\nTitle - ");
             Title = Console.ReadLine();
 
-            Console.Write("Year - ");
+            Console.Write("\nYear - ");
             Year = int.Parse(Console.ReadLine());
 
             bool notDone = true;
             while (notDone) {
-                Console.WriteLine("Quality (0 - SD, 1 - HD, 2 - UHD) - ");
+                Console.Write("\nQuality (0 - SD, 1 - HD, 2 - UHD) - ");
                 int tempInput = int.Parse(Console.ReadLine());
                 if (tempInput >= 0 && tempInput <= 2)
                 {
@@ -35,7 +43,7 @@ namespace movie_lib
                 }
                 else
                 {
-                    Console.WriteLine("Write number from 0 to 2");
+                    Console.Write("\nWrite number from 0 to 2");
                 }
             }
         }
@@ -49,5 +57,6 @@ namespace movie_lib
         {
             Console.Write(ID);
         }
+
     }
 }

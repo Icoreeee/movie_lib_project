@@ -13,7 +13,7 @@ namespace movie_lib
 
         public string Name { get; private set; }
 
-        Movie[] movies;
+        List<Movie> movies = new List<Movie>();
         int num = 0;
         public int ID { get; private set; }
 
@@ -21,14 +21,13 @@ namespace movie_lib
         {
             ID = id;
             Name = name;
-            movies = new Movie[MaxMovies];
         }
 
         public void AddMovie()
         {
             Movie m = new Movie(num);
             m.InputData();
-            movies[num] = m;
+            movies.Add(m);
             num++;
         }
 
@@ -39,6 +38,7 @@ namespace movie_lib
 
         public void ShowMovies()
         {
+            movies.Sort();
             for (int i = 0; i < num; i++)
             {
                 movies[i].ShowMovie();
@@ -47,22 +47,17 @@ namespace movie_lib
 
         public void DeleteMovie()
         {
-            if (num == 0) Console.WriteLine("This collection don't have films!");
+            if (num == 0) Console.WriteLine("This collection doesn't have films!");
             else
             {
                 int choose;
                 Console.Write($"Which movie to delete (0 - {num - 1})\n");
                 ShowMovies();
                 choose = int.Parse(Console.ReadLine());
-                movies = movies.Where((source, index) => index != choose).ToArray();
+                movies.RemoveAt(choose);
                 num--;
                 Console.WriteLine("Collection:");
                 Console.WriteLine("-----------");
-
-
-
-                0/85
-                        000
                 ShowMovies();
             }
         }

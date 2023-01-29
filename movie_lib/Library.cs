@@ -21,64 +21,110 @@ namespace movie_lib
             N = 0;
         }
 
+        public void NoCollection()
+        {
+            Console.WriteLine("\nFirst create a collection");
+            Console.WriteLine("\nPress any key to continue");
+            Console.Write("> ");
+            Console.ReadLine();
+        }
+
         public void AddCollection()
         {
-            Console.Write("Collection name - ");
-            string name = Console.ReadLine();
+                Console.Write("\nCollection name - ");
+                string name = Console.ReadLine();
 
-            Collection c = new Collection(N, name);
-            tab[N] = c;
-            N++;
+                Collection c = new Collection(N, name);
+                tab[N] = c;
+                N++;
         }
 
         public void PrintMovie()
         {
-            int choose;
-            PrintCollection();
-            Console.Write("Choose id of collection > ");
-            choose = int.Parse(Console.ReadLine());
-            tab[choose].ShowMovies();
+            if (N == 0)
+            {
+                NoCollection();
+                return;
+            }
+            else
+            {
+                int choose;
+                PrintCollection();
+                Console.Write("\nChoose id of collection > ");
+                choose = int.Parse(Console.ReadLine());
+                tab[choose].ShowMovies();
+            }
         }
 
         public void PrintCollection()
         {
-            Console.WriteLine("Collections:");
-            Console.WriteLine("------------");
-
-            for (int i = 0; i < N; i++)
+            if (N == 0)
             {
-                tab[i].Show();
+                NoCollection();
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Collections:");
+                Console.WriteLine("------------");
+
+                for (int i = 0; i < N; i++)
+                {
+                    tab[i].Show();
+                }
             }
         }
 
         public void AddMovie()
         {
-            PrintCollection();
-            Console.Write($"To which collection (0 - {N - 1})");
-            int n = int.Parse(Console.ReadLine());
-            tab[n].AddMovie();
+            if (N == 0)
+            {
+                NoCollection();
+                return;
+            }
+            else
+            {
+                PrintCollection();
+                Console.Write($"\nTo which collection (0 - {N - 1})");
+                int n = int.Parse(Console.ReadLine());
+                tab[n].AddMovie();
+            }
         }
 
         public void DeleteCollection()
         {
-            int choose;
-            PrintCollection();
-            Console.Write($"Which collection to delete (0 - {N - 1})");
-            choose = int.Parse(Console.ReadLine());
-            tab = tab.Where((source, index) => index != choose).ToArray();
-            N--;
-            Console.WriteLine("Collections:");
-            Console.WriteLine("------------");
-            PrintCollection();
+            if (N == 0)
+            {
+                Console.WriteLine("\nFirst create a collection");
+                return;
+            }
+            else
+            {
+                int choose;
+                PrintCollection();
+                Console.Write($"\nWhich collection to delete (0 - {N - 1})");
+                choose = int.Parse(Console.ReadLine());
+                tab = tab.Where((source, index) => index != choose).ToArray();
+                N--;
+                PrintCollection();
+            }
         }
 
         public void DeleteMovie()
         {
-            int choose;
-            PrintCollection();
-            Console.Write($"From which collection delete movie (0 - {N - 1})");
-            choose = int.Parse(Console.ReadLine());
-            tab[choose].DeleteMovie();
+            if (N == 0)
+            {
+                Console.WriteLine("\nFirst create a collection");
+                return;
+            }
+            else
+            {
+                int choose;
+                PrintCollection();
+                Console.Write($"\nFrom which collection delete movie (0 - {N - 1})");
+                choose = int.Parse(Console.ReadLine());
+                tab[choose].DeleteMovie();
+            }
         }
     }
 }

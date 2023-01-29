@@ -16,6 +16,13 @@ namespace movie_lib
             library = new Library();
         }
 
+        public void Continue()
+        {
+            Console.WriteLine("\nPress any key to continue");
+            Console.Write("> ");
+            Console.ReadLine();
+        }
+
         public void Menu()
         {
             bool finish = false;
@@ -23,14 +30,15 @@ namespace movie_lib
             while (!finish)
             {
                 Console.WriteLine("Menu");
-                Console.WriteLine("=============");
-                Console.WriteLine("1 Add collection");
-                Console.WriteLine("2 Add movie");
-                Console.WriteLine("3 Show collections");
-                Console.WriteLine("4 Show movies");
-                Console.WriteLine("5 Delete collection");
-                Console.WriteLine("6 Delete movie");
-                Console.WriteLine("0 Finish\n");
+                Console.WriteLine("=======================");
+                Console.WriteLine("| 1 Add collection    |");
+                Console.WriteLine("| 2 Add movie         |");
+                Console.WriteLine("| 3 Show collections  |");
+                Console.WriteLine("| 4 Show movies       |");
+                Console.WriteLine("| 5 Delete collection |");
+                Console.WriteLine("| 6 Delete movie      |");
+                Console.WriteLine("| 0 Finish            |");
+                Console.WriteLine("=======================\n");
                 Console.Write("> ");
 
                 int choice = int.Parse(Console.ReadLine());
@@ -47,20 +55,24 @@ namespace movie_lib
                         library.AddMovie();
                         break;
                     case 3:
+                        Console.Clear();
                         library.PrintCollection();
-                        Thread.Sleep(5000);
+                        Continue();
                         break;
                     case 4:
+                        Console.Clear();
                         library.PrintMovie();
-                        Thread.Sleep(5000);
+                        Continue();
                         break;
                     case 5:
+                        Console.Clear();
                         library.DeleteCollection();
-                        Thread.Sleep(5000);
+                        Continue();
                         break;
                     case 6:
+                        Console.Clear();
                         library.DeleteMovie();
-                        Thread.Sleep(5000);
+                        Continue();
                         break;
                 }
                 Console.Clear();
