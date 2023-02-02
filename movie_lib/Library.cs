@@ -1,45 +1,113 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace movie_lib
 {
-    internal class Library
+    internal static class Library
     {
-        const int MaxCollection = 10;
-        Collection[] tab;
-        int N;
+        static string directoryPath = @"C:\OOP\movie_lib\";
+        public static List <Collection> tab = new List<Collection>();
+        static int N = 0;
 
-        public Library()
+        private static bool CheckNameMatch(List<Collection> objects, string inputName)
         {
-            tab = new Collection[MaxCollection];
-            N = 0;
+            return objects.Any(x => x.Name == inputName);
         }
 
-        public void NoCollection()
+        //public static void SaveCollections()
+        //{
+        //    string JsonWrite = JsonConvert.SerializeObject(tab);
+        //    File.WriteAllText(FilePath, JsonWrite);
+        //    Console.WriteLine("Collections saved successfully!");
+        //}
+
+        //public static void DisplaySavedCollections()
+        //{
+        //    string jsonString = File.ReadAllText(FilePath);
+        //    List<Collection> tab = JsonConvert.DeserializeObject<List<Collection>>(jsonString);
+        //    Console.WriteLine("Collections:");
+        //    Console.WriteLine("------------");
+
+        //    for (int i = 0; i < N; i++)
+        //    {
+        //        tab[i].ShowMe();
+        //    }
+        //}
+
+        public static void DeleteFile(string filePath)
         {
-            Console.WriteLine("\nFirst create a collection");
-            Console.WriteLine("\nPress any key to continue");
-            Console.Write("> ");
+            string Name = Path.GetFileNameWithoutExtension(filePath);
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+                Console.WriteLine($"Collection {Name} Deleted Successfully!");
+            }
+            else
+            {
+                Console.WriteLine($"Collection {Name} not found!");
+            }
+        }
+
+        public static void Finish()
+        {
+            foreach (Collection t in tab)
+            {
+                t.SaveCollection();
+            }
+        }
+
+        public static void LoadLibrary(string directoryPath)
+        {
+            string[] filePaths = Directory.GetFiles(directoryPath, "*.json");
+            for (int i = 0; i < filePaths.Length; i++)
+            {
+                Collection lc = new Collection(N, Path.GetFileNameWithoutExtension(filePaths[i]));
+                tab.Add(lc);
+                N++;
+            }
+        }
+
+        public static void Start()
+        {
+            LoadLibrary(directoryPath);
+            foreach (Collection t in tab)
+            {
+                t.LoadCollection();
+            }
+            foreach (Collection t in tab)
+            {
+                t.ShowMovies();
+            }
             Console.ReadLine();
         }
 
-        public void AddCollection()
+        public static void NoCollection()
         {
-                Console.Write("\nCollection name - ");
-                string name = Console.ReadLine();
-
-                Collection c = new Collection(N, name);
-                tab[N] = c;
-                N++;
+            Console.WriteLine("\nFirst create a collection");
+            Console.ReadLine();
         }
 
-        public void PrintMovie()
+        public static void AddCollection()
+        {
+            Console.Write("\nCollection name - ");
+            string name = Console.ReadLine();
+
+            if (CheckNameMatch(tab, name) == true)
+            {
+                Console.WriteLine("\nThere is a collection with this name, try another");
+                Console.WriteLine("\nPress any key to continue");
+                Console.Write("> ");
+                Console.ReadLine();
+                return;
+            }
+            Collection c = new Collection(N, name);
+            tab.Add(c);
+            N++;
+        }
+
+        public static void PrintMovie()
         {
             if (N == 0)
             {
@@ -49,14 +117,18 @@ namespace movie_lib
             else
             {
                 int choose;
-                PrintCollection();
+                PrintCollections();
                 Console.Write("\nChoose id of collection > ");
                 choose = int.Parse(Console.ReadLine());
+                Console.Clear();
+                Console.Write(" Collection:");
+                Console.WriteLine("-------------\n");
+                tab[choose].ShowMe();
                 tab[choose].ShowMovies();
             }
         }
 
-        public void PrintCollection()
+        public static void PrintCollections()
         {
             if (N == 0)
             {
@@ -70,12 +142,12 @@ namespace movie_lib
 
                 for (int i = 0; i < N; i++)
                 {
-                    tab[i].Show();
+                    tab[i].ShowMe();
                 }
             }
         }
 
-        public void AddMovie()
+        public static void AddMovie()
         {
             if (N == 0)
             {
@@ -84,14 +156,14 @@ namespace movie_lib
             }
             else
             {
-                PrintCollection();
+                PrintCollections();
                 Console.Write($"\nTo which collection (0 - {N - 1})");
                 int n = int.Parse(Console.ReadLine());
                 tab[n].AddMovie();
             }
         }
 
-        public void DeleteCollection()
+        public static void DeleteCollection()
         {
             if (N == 0)
             {
@@ -101,16 +173,27 @@ namespace movie_lib
             else
             {
                 int choose;
-                PrintCollection();
+                PrintCollections();
                 Console.Write($"\nWhich collection to delete (0 - {N - 1})");
                 choose = int.Parse(Console.ReadLine());
-                tab = tab.Where((source, index) => index != choose).ToArray();
+                string filename = tab[choose].Name;
+                string filePath = directoryPath + filename + ".json";
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                    Console.WriteLine($"Collection {tab[choose].Name} Deleted Successfully!");
+                }
+                else
+                {
+                    Console.WriteLine($"Collection {tab[choose].Name} not found!");
+                }
+                tab.RemoveAt(choose);
                 N--;
-                PrintCollection();
+                PrintCollections();
             }
         }
 
-        public void DeleteMovie()
+        public static void DeleteMovie()
         {
             if (N == 0)
             {
@@ -120,7 +203,7 @@ namespace movie_lib
             else
             {
                 int choose;
-                PrintCollection();
+                PrintCollections();
                 Console.Write($"\nFrom which collection delete movie (0 - {N - 1})");
                 choose = int.Parse(Console.ReadLine());
                 tab[choose].DeleteMovie();

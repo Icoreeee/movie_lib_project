@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace movie_lib
 {
+    [Serializable]
     internal class Movie : IComparable<Movie>
     {
         public enum QualityType { SD, HD, UHD }
+        public enum GenreType { Action, Drama, Adventure, Comedy, Fantasy, Horror, Musical, Sports }
         public string Title { get; private set; }
         public int Year { get; private set; }
         public QualityType Quality { get; private set; }
+        public GenreType Genre { get; private set; }
+        
         int ID;
         public Movie(int id) { ID = id; }
 
@@ -34,11 +32,23 @@ namespace movie_lib
 
             bool notDone = true;
             while (notDone) {
-                Console.Write("\nQuality (0 - SD, 1 - HD, 2 - UHD) - ");
-                int tempInput = int.Parse(Console.ReadLine());
-                if (tempInput >= 0 && tempInput <= 2)
+                Console.Write("\nGenre \n0) - Action \n1) - Drama \n2) - Adventure \n3) - Comedy \n4) - Fantasy \n5) - Horror \n6) - Musical \n7) - Sports \n> ");
+                int genreInput = int.Parse(Console.ReadLine());
+                if (genreInput >= 0 && genreInput <= 2)
                 {
-                    Quality = (QualityType)tempInput;
+                    Genre = (GenreType)genreInput;
+                    notDone = false;
+                }
+                else
+                {
+                    Console.Write("\nWrite number from 0 to 2");
+                }
+
+                Console.Write("\nQuality \n0) - SD \n1) - HD \n2) - UHD \n> ");
+                int qualityInput = int.Parse(Console.ReadLine());
+                if (qualityInput >= 0 && qualityInput <= 2)
+                {
+                    Quality = (QualityType)qualityInput;
                     notDone = false;
                 }
                 else
@@ -50,13 +60,7 @@ namespace movie_lib
 
         public void ShowMovie()
         {
-            Console.WriteLine($"{Title}, {Year}, {Quality}");
+            Console.WriteLine($"{Title}, {Year}, {Genre}, {Quality}");
         }
-
-        public void PrintId()
-        {
-            Console.Write(ID);
-        }
-
     }
 }

@@ -1,44 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace movie_lib
 {
-    internal class Application
+    internal static class Application
     {
-        Library library;
-
-        public Application()
-        {
-            library = new Library();
-        }
-
-        public void Continue()
+        public static void Continue()
         {
             Console.WriteLine("\nPress any key to continue");
             Console.Write("> ");
             Console.ReadLine();
         }
 
-        public void Menu()
+        public static void Menu()
         {
+            bool start = false;
             bool finish = false;
+
+            while (!start)
+            {
+                Console.WriteLine("To run the app input 1\n");
+                Console.WriteLine("To stop the app input 0\n");
+
+                int startchoice = int.Parse(Console.ReadLine());
+                
+                switch (startchoice)
+                {
+                    case 0:
+                        Environment.Exit(0);
+                        break;
+                    case 1:
+                        Library.Start();
+                        Console.Clear();
+                        start = true;
+                        break;
+
+                }
+            }
 
             while (!finish)
             {
-                Console.WriteLine("Menu");
-                Console.WriteLine("=======================");
-                Console.WriteLine("| 1 Add collection    |");
-                Console.WriteLine("| 2 Add movie         |");
-                Console.WriteLine("| 3 Show collections  |");
-                Console.WriteLine("| 4 Show movies       |");
-                Console.WriteLine("| 5 Delete collection |");
-                Console.WriteLine("| 6 Delete movie      |");
-                Console.WriteLine("| 0 Finish            |");
-                Console.WriteLine("=======================\n");
+                Console.WriteLine("          Main Menu");
+                Console.WriteLine("============================");
+                Console.WriteLine("| 1 Add collection         |");
+                Console.WriteLine("| 2 Add movie              |");
+                Console.WriteLine("| 3 Show collections       |");
+                Console.WriteLine("| 4 Show movies            |");
+                Console.WriteLine("| 5 Delete collection      |");
+                Console.WriteLine("| 6 Delete movie           |");
+                Console.WriteLine("| 0 Finish                 |");
+                Console.WriteLine("============================\n");
                 Console.Write("> ");
 
                 int choice = int.Parse(Console.ReadLine());
@@ -46,32 +56,33 @@ namespace movie_lib
                 switch (choice)
                 {
                     case 0:
+                        Library.Finish();
                         finish = true;
                         break;
                     case 1:
-                        library.AddCollection();
+                        Library.AddCollection();
                         break;
                     case 2:
-                        library.AddMovie();
+                        Library.AddMovie();
                         break;
                     case 3:
                         Console.Clear();
-                        library.PrintCollection();
+                        Library.PrintCollections();
                         Continue();
                         break;
                     case 4:
                         Console.Clear();
-                        library.PrintMovie();
+                        Library.PrintMovie();
                         Continue();
                         break;
                     case 5:
                         Console.Clear();
-                        library.DeleteCollection();
+                        Library.DeleteCollection();
                         Continue();
                         break;
                     case 6:
                         Console.Clear();
-                        library.DeleteMovie();
+                        Library.DeleteMovie();
                         Continue();
                         break;
                 }

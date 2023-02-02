@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace movie_lib
 {
+    [Serializable]
     internal class Collection
     {
-
-        const int MaxMovies = 100;
-
         public string Name { get; private set; }
 
         List<Movie> movies = new List<Movie>();
@@ -21,7 +18,55 @@ namespace movie_lib
         {
             ID = id;
             Name = name;
+            Library.tab.Add(this);
         }
+
+        public void SaveCollection()
+        {
+            string JsonWrite = JsonConvert.SerializeObject(movies);
+            File.WriteAllText(@"C:\OOP\movie_lib\" + Name + ".json", JsonWrite);
+            Console.WriteLine($"\nCollection {Name} saved successfully!");
+            Console.ReadLine();
+        }
+
+
+        public void LoadCollection()
+        {
+            string filePath = @"C:\OOP\movie_lib\" + Name + ".json";
+            if (File.Exists(filePath))
+            {
+                string JsonRead = File.ReadAllText(filePath);
+                movies = JsonConvert.DeserializeObject<List<Movie>>(JsonRead);
+                Console.WriteLine($"\nCollection {Name} loaded successfully!");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine($"\nFile {Name} does not exist in the specified directory.");
+                Console.ReadLine();
+            }
+        }
+        //public void DisplaySavedCollections()
+        //{
+        //    string jsonString = File.ReadAllText(MoviePath);
+        //    List<Collection> tab = JsonConvert.DeserializeObject<List<Collection>>(jsonString);
+        //    Console.WriteLine("Collections:");
+        //    Console.WriteLine("------------");
+
+        //    for (int i = 0; i < N; i++)
+        //    {
+        //        tab[i].ShowMe();
+        //    }
+        //}
+
+        //public void SerializeToFile()
+        //{
+        //    using (Stream stream = File.Open(Name + ".txt", FileMode.Create))
+        //    {
+        //        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        //        binaryFormatter.Serialize(stream, this);
+        //    }
+        //}
 
         public void AddMovie()
         {
@@ -31,7 +76,7 @@ namespace movie_lib
             num++;
         }
 
-        public void Show()
+        public void ShowMe()
         {
             Console.WriteLine($"{ID} - {Name}");
         }
@@ -47,7 +92,10 @@ namespace movie_lib
 
         public void DeleteMovie()
         {
-            if (num == 0) Console.WriteLine("This collection doesn't have films!");
+            if (num == 0)
+            {
+                Console.WriteLine("This collection doesn't have films!");
+            }
             else
             {
                 int choose;
