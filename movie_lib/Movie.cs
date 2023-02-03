@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace movie_lib
 {
-    [Serializable]
-    internal class Movie : IComparable<Movie>
+    public class Movie : IComparable<Movie>
     {
         public enum QualityType { SD, HD, UHD }
         public enum GenreType { Action, Drama, Adventure, Comedy, Fantasy, Horror, Musical, Sports }
@@ -14,6 +14,16 @@ namespace movie_lib
         
         int ID;
         public Movie(int id) { ID = id; }
+
+        [JsonConstructor]
+        public Movie(string title, int year, QualityType quality, GenreType genre, int iD)
+        {
+            Title = title;
+            Year = year;
+            Quality = quality;
+            Genre = genre;
+            ID = iD;
+        }
 
         public int CompareTo(Movie other)
         { 
@@ -31,18 +41,23 @@ namespace movie_lib
             Year = int.Parse(Console.ReadLine());
 
             bool notDone = true;
-            while (notDone) {
+            while (notDone)
+            {
                 Console.Write("\nGenre \n0) - Action \n1) - Drama \n2) - Adventure \n3) - Comedy \n4) - Fantasy \n5) - Horror \n6) - Musical \n7) - Sports \n> ");
                 int genreInput = int.Parse(Console.ReadLine());
-                if (genreInput >= 0 && genreInput <= 2)
+                if (genreInput >= 0 && genreInput <= 7)
                 {
                     Genre = (GenreType)genreInput;
                     notDone = false;
                 }
                 else
                 {
-                    Console.Write("\nWrite number from 0 to 2");
+                    Console.Write("\nWrite number from 0 to 7");
                 }
+            }
+            notDone = true;
+            while (notDone)
+            {
 
                 Console.Write("\nQuality \n0) - SD \n1) - HD \n2) - UHD \n> ");
                 int qualityInput = int.Parse(Console.ReadLine());
@@ -56,6 +71,7 @@ namespace movie_lib
                     Console.Write("\nWrite number from 0 to 2");
                 }
             }
+            
         }
 
         public void ShowMovie()

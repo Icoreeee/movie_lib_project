@@ -1,9 +1,9 @@
 ﻿using System;
-
 namespace movie_lib
 {
-    internal static class Application
+    public static class Application
     {
+
         public static void Continue()
         {
             Console.WriteLine("\nPress any key to continue");
@@ -13,29 +13,8 @@ namespace movie_lib
 
         public static void Menu()
         {
-            bool start = false;
             bool finish = false;
-
-            while (!start)
-            {
-                Console.WriteLine("To run the app input 1\n");
-                Console.WriteLine("To stop the app input 0\n");
-
-                int startchoice = int.Parse(Console.ReadLine());
-                
-                switch (startchoice)
-                {
-                    case 0:
-                        Environment.Exit(0);
-                        break;
-                    case 1:
-                        Library.Start();
-                        Console.Clear();
-                        start = true;
-                        break;
-
-                }
-            }
+            Library.Start();
 
             while (!finish)
             {
