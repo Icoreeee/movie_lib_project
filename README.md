@@ -42,8 +42,7 @@ I create an application which contains:
    * Auto-sort films by year
 3. Additional functions:
    * Implemented [IComparable](https://learn.microsoft.com/en-us/dotnet/api/system.icomparable-1?view=net-7.0) interface for sorting in [movies](https://github.com/Icoreeee/movie_lib_project/blob/master/movie_lib/Movie.cs)
-   * Implemented write and read to file via [Newtonsoft JSON](https://www.newtonsoft.com/json). 
-   Files are saving in project folder -> bin -> Debug -> JsonFiles
+   * Implemented write and read to file via [Newtonsoft JSON](https://www.newtonsoft.com/json). Files with collections are stored in project folder -> bin -> Debug -> JsonFiles
    * Singleton
 
 ## Technologies
