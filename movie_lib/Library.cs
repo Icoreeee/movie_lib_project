@@ -7,6 +7,7 @@ namespace movie_lib
 {
     public static class Library
     {
+        private static int choose;
         static string directoryPath = @"JsonFiles\";
         public static List <Collection> tab = new List<Collection>();
 
@@ -25,7 +26,7 @@ namespace movie_lib
 
         public static void LoadLibrary(string directoryPath)
         {
-            System.IO.Directory.CreateDirectory(directoryPath);
+            Directory.CreateDirectory(directoryPath);
             string[] filePaths = Directory.GetFiles(directoryPath, "*.json");
             for (int i = 0; i < filePaths.Length; i++)
             {
@@ -73,7 +74,6 @@ namespace movie_lib
             }
             else
             {
-                int choose;
                 PrintCollections();
                 Console.Write("\nChoose id of collection > ");
                 choose = int.Parse(Console.ReadLine());
@@ -130,9 +130,9 @@ namespace movie_lib
             }
             else
             {
-                int choose;
                 PrintCollections();
-                Console.Write($"\nWhich collection to delete (0 - {tab.Count() - 1})");
+                Console.WriteLine($"\nWhich collection to delete (0 - {tab.Count() - 1})");
+                Console.WriteLine("If you want to exit input '-1'");
                 choose = int.Parse(Console.ReadLine());
                 string filename = tab[choose].Name;
                 string filePath = directoryPath + filename + ".json";
@@ -159,7 +159,6 @@ namespace movie_lib
             }
             else
             {
-                int choose;
                 PrintCollections();
                 Console.Write($"\nFrom which collection delete movie (0 - {tab.Count() - 1})");
                 choose = int.Parse(Console.ReadLine());

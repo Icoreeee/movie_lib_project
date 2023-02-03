@@ -9,7 +9,7 @@ namespace movie_lib
     {
         public string Name { get; private set; }
 
-        private List<Movie> movies = new List<Movie>();
+        public static List<Movie> movies = new List<Movie>();
         public int ID { get; private set; }
 
         public Collection(int id, string name)
@@ -57,6 +57,7 @@ namespace movie_lib
             movies.Sort();
             for (int i = 0; i < movies.Count; i++)
             {
+                Console.Write($"{i} ");
                 movies[i].ShowMovie();
             }
         }
@@ -70,11 +71,12 @@ namespace movie_lib
             else
             {
                 int choose;
-                Console.Write($"Which movie to delete (0 - {movies.Count - 1})\n");
+                Console.Write($"Which movie to delete (0 - {movies.Count-1})\n");
                 ShowMovies();
+                Console.Write("\n> ");
                 choose = int.Parse(Console.ReadLine());
                 movies.RemoveAt(choose);
-                Console.WriteLine("Collection:");
+                Console.WriteLine("\nCollection:");
                 Console.WriteLine("-----------");
                 ShowMovies();
             }

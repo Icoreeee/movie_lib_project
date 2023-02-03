@@ -71,6 +71,7 @@ namespace movie_lib
                     Console.Write("\nWrite number from 0 to 2");
                 }
             }
+            ID++;
             
         }
 

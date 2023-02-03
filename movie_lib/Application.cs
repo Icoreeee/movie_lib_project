@@ -4,11 +4,19 @@ namespace movie_lib
     public static class Application
     {
 
-        public static void Continue()
+        private static void Continue()
         {
             Console.WriteLine("\nPress any key to continue");
             Console.Write("> ");
             Console.ReadLine();
+        }
+
+        private static int ExitOrContinue()
+        {
+            Console.WriteLine("To continue input 1");
+            Console.WriteLine("To exit input any other number\n");
+            Console.Write("> ");
+            return int.Parse(Console.ReadLine());
         }
 
         public static void Menu()
@@ -35,14 +43,23 @@ namespace movie_lib
                 switch (choice)
                 {
                     case 0:
-                        Library.Finish();
-                        finish = true;
+                        if (ExitOrContinue() == 1)
+                        {
+                            Library.Finish();
+                            finish = true;
+                        }
                         break;
                     case 1:
-                        Library.AddCollection();
+                        if (ExitOrContinue() == 1)
+                        {
+                            Library.AddCollection();
+                        }
                         break;
                     case 2:
-                        Library.AddMovie();
+                        if (ExitOrContinue() == 1)
+                        {
+                            Library.AddMovie();
+                        }
                         break;
                     case 3:
                         Console.Clear();
@@ -55,14 +72,20 @@ namespace movie_lib
                         Continue();
                         break;
                     case 5:
-                        Console.Clear();
-                        Library.DeleteCollection();
-                        Continue();
+                        if (ExitOrContinue() == 1)
+                        {
+                            Console.Clear();
+                            Library.DeleteCollection();
+                            Continue();
+                        }
                         break;
                     case 6:
-                        Console.Clear();
-                        Library.DeleteMovie();
-                        Continue();
+                        if (ExitOrContinue() == 1)
+                        {
+                            Console.Clear();
+                            Library.DeleteMovie();
+                            Continue();
+                        }
                         break;
                 }
                 Console.Clear();
