@@ -41,7 +41,7 @@ I create an application which contains:
    * Displaying object/collection of objects
    * Auto-sort films by year
 3. Additional functions:
-   * Implemented [IComparable](https://learn.microsoft.com/en-us/dotnet/api/system.icomparable-1?view=net-7.0)interface for sorting in [movies](https://github.com/Icoreeee/movie_lib_project/blob/master/movie_lib/Movie.cs)
+   * Implemented [IComparable](https://learn.microsoft.com/en-us/dotnet/api/system.icomparable-1?view=net-7.0) interface for sorting in [movies](https://github.com/Icoreeee/movie_lib_project/blob/master/movie_lib/Movie.cs)
    * Implemented write and read to file via [Newtonsoft JSON](https://www.newtonsoft.com/json). 
    Files are saving in project folder -> bin -> Debug -> JsonFiles
    * Singleton
@@ -54,5 +54,5 @@ I create an application which contains:
 
 1. Clone this repository
 git clone https://github.com/Icoreeee/movie_lib_project.git
-2. Run [Program.cs](https://github.com/Icoreeee/movie_lib_project/blob/master/movie_lib/Program.cs)file via your IDE
+2. Run [Program.cs](https://github.com/Icoreeee/movie_lib_project/blob/master/movie_lib/Program.cs) file via your IDE
 3. Done =)
