@@ -29,7 +29,7 @@ Design and implement an object-oriented movie library management system. The bas
 * Use "Dependency Injection" mechanisms, e.g. Singleton, Factory, Decorator (e.g. decorators for implementing operators “and”/”or” when searching)
 
 ### My solution
-I create application which contains:
+I create an application which contains:
 1. Objects:
    * Movie (movie) - Has such properties as: Title (user-defined), Year (user-defined), Genre (selectable from a list of genres), Quality (selectable from a list of quality types).
    * Collection(Category) - Represents a personal collection with a list of movies for the user. Each user can create a collection for himself and put all the movies he wants in it.
